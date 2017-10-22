@@ -8,17 +8,26 @@ La brique SARAH transmet un objet à la brique suivante qui s’appelle « msg �
 objet en sortie de la brique sarah
 
 msg : Object
-
 object
+
 payload: object
+
   text: "sarah éteins Bureau"
+  
   confidence: 0.8701451
+  
 options: object
+
   plugin: "domticz-http"
+  
   action: "Off"
+  
   command: "switch"
+  
   device: "21"
+  
   type: "light"
+  
 
 La partie « options »  provient des élément indiqués dans les fichiers xml .
 
