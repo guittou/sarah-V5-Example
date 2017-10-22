@@ -408,22 +408,6 @@
         ]
     },
     {
-        "id": "97120a15.929b98",
-        "type": "function",
-        "z": "b66acd7.74f2a3",
-        "name": "domoticz parametres",
-        "func": "msg2.ip = \"192.168.110.150\";\nmsg2.port = \"8081\";\n\n\n\nreturn msg2;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 488,
-        "y": 171,
-        "wires": [
-            [
-                "305b8593.58569a"
-            ]
-        ]
-    },
-    {
         "id": "65f33c0b.3eaaa4",
         "type": "win-listen-config",
         "z": "",
