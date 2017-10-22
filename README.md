@@ -3,8 +3,6 @@
 
 Example d'uttilisation sarah V5
 
-Pour ceux qui ne comprennent pas la nouvelle version c’est en fait assez simple.
-
 La brique SARAH transmet un objet à la brique suivante qui s’appelle « msg » et qui contient les valeurs en  fonction des fichier xml dans le dossier grammar :
 
 objet en sortie de la brique sarah
@@ -81,10 +79,6 @@ Puis le fichier domticz.xml pour rentrer les détails de vos périphériques
 J’ai aussi essayé en utilisant le broker mqtt  (https://www.domoticz.com/wiki/MQTT).
 Ça fonctionne pour réaliser une action sur un device ou une scène (editer la brique domoticz-mqtt-output)
 
-Par contre même si J’arrive bien à récupérer toute les valeurs de domticz via la brique mqtt output, je n’ai pas encore réussi à récupérer l’état d’un device à la demande.
-
-Donc si quelqu’un sait comment faire je suis preneur.
-
 La branche utilisant mqtt n’est pas utilisée il faut  changer la variable dans le fichier domoticz.xml :
 
   <tag>out.action.plugin="domticz-http";</tag>
@@ -95,15 +89,9 @@ En
 
 Pour utiliser le broker mqtt pour piloter domoticz à la place du http.
 
-J’ai donc obtenu avec cette v5 les mêmes fonctions que je réalisais avant avec la v3 et la V4.
-
-Mais je pense que je vais très vite me pencher sur toutes les autres possibilités de cette nouvelle version, Comme la montré Stéphane Bascher avec l’utilisation de l’api google.
-
-Il ne manque plus que la détection du HOTWORD à faire sur linux (snowboy par example https://flows.nodered.org/node/node-red-contrib-snowboy) et on pourra enfin ce passer de windows.
 
 
-Merci à tous les développeurs des plugins précèdent qui m’ont servi jusqu’à maintenant.
-Et bien su merci à Jean-Philippe Encausse et VISEO pour cette nouvelle version.
+
 
 
 
