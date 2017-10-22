@@ -1,0 +1,455 @@
+[
+    {
+        "id": "24235df.207f6a2",
+        "type": "win-sarah",
+        "z": "b66acd7.74f2a3",
+        "name": "",
+        "active": true,
+        "options": "65f33c0b.3eaaa4",
+        "grammar": "",
+        "x": 107,
+        "y": 56,
+        "wires": [
+            [
+                "d58822e8.be178",
+                "4b2e8042.50f56"
+            ]
+        ]
+    },
+    {
+        "id": "d58822e8.be178",
+        "type": "switch",
+        "z": "b66acd7.74f2a3",
+        "name": "",
+        "property": "payload.options.plugin",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "time",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "domticz-http",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "mqtt",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "meteo",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 4,
+        "x": 99,
+        "y": 219,
+        "wires": [
+            [
+                "3922becb.2a95c2"
+            ],
+            [
+                "b7181c57.ae347"
+            ],
+            [
+                "771cb005.efe9"
+            ],
+            [
+                "114fa8b5.4654e7"
+            ]
+        ]
+    },
+    {
+        "id": "3922becb.2a95c2",
+        "type": "function",
+        "z": "b66acd7.74f2a3",
+        "name": "time",
+        "func": "var date = new Date();\nvar hour = date.getHours();\nvar min = date.getMinutes()\n\nmsg.time = \"il est \"+hour+\"heure\"+min;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 280,
+        "y": 104,
+        "wires": [
+            [
+                "6a858fe8.fd9ba"
+            ]
+        ]
+    },
+    {
+        "id": "6a858fe8.fd9ba",
+        "type": "win-speak",
+        "z": "b66acd7.74f2a3",
+        "name": "",
+        "input": "time",
+        "x": 456,
+        "y": 104,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4b2e8042.50f56",
+        "type": "debug",
+        "z": "b66acd7.74f2a3",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 633,
+        "y": 52,
+        "wires": []
+    },
+    {
+        "id": "b7181c57.ae347",
+        "type": "function",
+        "z": "b66acd7.74f2a3",
+        "name": "domoticz-confirmation",
+        "func": "var phrase_success = new Array();\n        phrase_success[1] = 'Oui chef';\n        phrase_success[2] = 'A vos ordres!';\n        phrase_success[3] = 'Ok!';\n\nrandom = Math.floor((Math.random()*(phrase_success.length-1))+1);\nphrase_select = phrase_success[random]; \nmsg.confirm = phrase_select\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 324,
+        "y": 225,
+        "wires": [
+            [
+                "3382df95.6bfe3"
+            ]
+        ]
+    },
+    {
+        "id": "3382df95.6bfe3",
+        "type": "win-speak",
+        "z": "b66acd7.74f2a3",
+        "name": "",
+        "input": "confirm",
+        "x": 549,
+        "y": 224,
+        "wires": [
+            [
+                "305b8593.58569a"
+            ]
+        ]
+    },
+    {
+        "id": "305b8593.58569a",
+        "type": "function",
+        "z": "b66acd7.74f2a3",
+        "name": "domoticz-http",
+        "func": "var ip = \"192.168.110.150\";\nvar port = \"8081\";\nvar url = 'http://'+ip+':'+port+'/';\n\nvar action = msg.payload.options.action;\nvar command = msg.payload.options.command;\nvar device = msg.payload.options.device;\nvar type = msg.payload.options.type;\nvar tss = msg.payload.options.tss;\n\n\n\n\n\nswitch(command){\n\t\n\tcase \"switch\":\n\t\n\t\t\t\n\t\tif(action&&device&&type){\n\n\t\t\tmsg.url = url+'json.htm?type=command&param='+command+type+'&idx='+device+'&switchcmd='+action;\n\t\t\t\n\t\t    msg.speak = \"\"\n\t\t\n\t\t}\n\t\t\n\t\telse{\n\t\t\t\n\t\t\tmsg.speak = \"Il semble que la configuration soit invalide\";\n\t\t\t\n\t\t}\n\t\tbreak;\n\t\n\tcase \"status\":\n\t    \n\t    msg.url = url+'json.htm?type=devices&rid='+device;\n\t    \n\t    msg.speak = \"\"\n}\n\nmsg.command = command;\nmsg.tss = tss;\nreturn msg;\n",
+        "outputs": "1",
+        "noerr": 0,
+        "x": 716,
+        "y": 224,
+        "wires": [
+            [
+                "4c1566a2.cfaed8"
+            ]
+        ]
+    },
+    {
+        "id": "468db138.a509b",
+        "type": "http request",
+        "z": "b66acd7.74f2a3",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 1027,
+        "y": 201,
+        "wires": [
+            [
+                "d5c6e9f0.278198",
+                "6c3b1393.7cfbcc"
+            ]
+        ]
+    },
+    {
+        "id": "4df4fde.f59c404",
+        "type": "win-speak",
+        "z": "b66acd7.74f2a3",
+        "name": "",
+        "input": "speak",
+        "x": 1599,
+        "y": 252,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e0dde450.153b88",
+        "type": "function",
+        "z": "b66acd7.74f2a3",
+        "name": "domoticz-temperature",
+        "func": "var temp = msg.payload.result;\nvar tss = msg.tss\n        \n\n    temp = temp[0].Temp;\n\n    msg.speak = 'La température '+tss+' est de '+temp+' degré'; \n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1384,
+        "y": 201,
+        "wires": [
+            [
+                "4df4fde.f59c404"
+            ]
+        ]
+    },
+    {
+        "id": "d5c6e9f0.278198",
+        "type": "json",
+        "z": "b66acd7.74f2a3",
+        "name": "",
+        "pretty": true,
+        "x": 1188,
+        "y": 201,
+        "wires": [
+            [
+                "e0dde450.153b88"
+            ]
+        ]
+    },
+    {
+        "id": "4c1566a2.cfaed8",
+        "type": "switch",
+        "z": "b66acd7.74f2a3",
+        "name": "",
+        "property": "command",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "status",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "switch",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 2,
+        "x": 879,
+        "y": 224,
+        "wires": [
+            [
+                "468db138.a509b"
+            ],
+            [
+                "e1869e.bde6696"
+            ]
+        ]
+    },
+    {
+        "id": "e1869e.bde6696",
+        "type": "http request",
+        "z": "b66acd7.74f2a3",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 1024,
+        "y": 253,
+        "wires": [
+            [
+                "6c3b1393.7cfbcc"
+            ]
+        ]
+    },
+    {
+        "id": "4fb8767.5788888",
+        "type": "function",
+        "z": "b66acd7.74f2a3",
+        "name": "domoticz-mqtt",
+        "func": "var action = msg.payload.options.action;\nvar device = msg.payload.options.device;\nvar type = msg.payload.options.type;\nvar command = msg.payload.options.command;\n\nswitch(action){\n    \n    case \"On\":\n        \n        \n}\n\nswitch(command){\n\t\n\tcase \"switch\":\n\t\n\t    msg.payload = '{\"command\": \"switch'+type+'\", \"idx\": '+device+', \"switchcmd\": \"'+action+'\", \"level\": 100 }';\n\t\t\n\t\tbreak;\n\t\n\tcase \"etat\":\n\t    \n\t    msg.payload = {\"command\": \"getsceneinfo\", \"idx\": 197 }\n\t\n}\n\n\n\n\n\n\n\nreturn msg;\n",
+        "outputs": "1",
+        "noerr": 0,
+        "x": 576,
+        "y": 362,
+        "wires": [
+            [
+                "efedaad.20bda58"
+            ]
+        ]
+    },
+    {
+        "id": "efedaad.20bda58",
+        "type": "mqtt out",
+        "z": "b66acd7.74f2a3",
+        "name": "domoticz-mqtt-output",
+        "topic": "domoticz/in",
+        "qos": "",
+        "retain": "",
+        "broker": "b8eaa0b6.3c117",
+        "x": 813,
+        "y": 363,
+        "wires": []
+    },
+    {
+        "id": "771cb005.efe9",
+        "type": "function",
+        "z": "b66acd7.74f2a3",
+        "name": "domoticz-confirmation",
+        "func": "var phrase_success = new Array();\n        phrase_success[1] = 'C\\'est fait!';\n        phrase_success[2] = 'A vos ordres!';\n        phrase_success[3] = 'Commande effectuée!';\n        phrase_success[4] = 'Ok!';\n        phrase_success[5] = 'Oui chef'\n        \nrandom = Math.floor((Math.random()*(phrase_success.length-1))+1);\nphrase_select = phrase_success[random]; \nmsg.confirm = phrase_select\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 320,
+        "y": 296,
+        "wires": [
+            [
+                "a142046b.2591a8",
+                "4fb8767.5788888"
+            ]
+        ]
+    },
+    {
+        "id": "a142046b.2591a8",
+        "type": "win-speak",
+        "z": "b66acd7.74f2a3",
+        "name": "",
+        "input": "confirm",
+        "x": 544,
+        "y": 297,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6c3b1393.7cfbcc",
+        "type": "function",
+        "z": "b66acd7.74f2a3",
+        "name": "timeout",
+        "func": "switch(msg.statusCode){\n    \n    case \"ETIMEDOUT\":\n    \n        msg.speak = \"Domotix est injoignable\";\n    \n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1200,
+        "y": 253,
+        "wires": [
+            [
+                "4df4fde.f59c404"
+            ]
+        ]
+    },
+    {
+        "id": "114fa8b5.4654e7",
+        "type": "function",
+        "z": "b66acd7.74f2a3",
+        "name": "meteo",
+        "func": "var apikey = \"c592bab65d7c00584a65fd1d49fb97c7\";\n\nif (typeof msg.payload.options.day !== 'undefined') {\n    day = msg.payload.options.day;\n}else{\n    day = \"0\";\n}\n\nif (typeof msg.payload.options.id !== 'undefined') {\n    id = msg.payload.options.id;\n}else{\n    id = \"2976179\";\n}\n\nvar url = 'http://api.openweathermap.org/data/2.5/forecast/daily?units=metric&lang=fr&APPID='+apikey;\n\n//---------------------------------------------------------------------///\n\n  // --- Récupération du jour de la semaine ---\n  if (day == 'lundi')         { numDay = 1;}\n  else if (day == 'mardi')    { numDay = 2;}\n  else if (day == 'mercredi') { numDay = 3;}\n  else if (day == 'jeudi')    { numDay = 4;}\n  else if (day == 'vendredi') { numDay = 5;}\n  else if (day == 'samedi')   { numDay = 6;}\n  else if (day == 'dimanche') { numDay = 0;}\n\nvar today = new Date();\nvar numToday = today.getDay();\nvar index = 0; // index est égal au jour recherché dans la liste renvoyée par le json\n\n\nif (typeof numDay == 'undefined'){\n    index = day;\n}\nelse {\n    if (numDay >= numToday){\n        index = numDay - numToday;\n    }\n    else{\n        index = 7 - (numToday - numDay);\n    }\n}\n\nmsg.index = index\n\n//-----------------------------------------------------------------------//\n\nmsg.url = url+'&id='+id\n\n\n\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 251,
+        "y": 537,
+        "wires": [
+            [
+                "e3254979.5e4a78"
+            ]
+        ]
+    },
+    {
+        "id": "e3254979.5e4a78",
+        "type": "http request",
+        "z": "b66acd7.74f2a3",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "url": "",
+        "x": 447,
+        "y": 537,
+        "wires": [
+            [
+                "a727839a.d0eda"
+            ]
+        ]
+    },
+    {
+        "id": "a727839a.d0eda",
+        "type": "json",
+        "z": "b66acd7.74f2a3",
+        "name": "",
+        "pretty": true,
+        "x": 614,
+        "y": 537,
+        "wires": [
+            [
+                "5543ec4.8fdb814"
+            ]
+        ]
+    },
+    {
+        "id": "5543ec4.8fdb814",
+        "type": "function",
+        "z": "b66acd7.74f2a3",
+        "name": "meteo-resultat",
+        "func": "var listeDay = msg.payload.list;\nvar City = msg.payload.city.name;\nvar timestamp = listeDay[msg.index].dt;\n\n\nvar day = ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];\n\nvar d = new Date(timestamp*1000);\nvar today = new Date();\n\n\nif (day[today.getDay()] == day[d.getDay()]){\n    day = \"aujourd'hui\"\n}\nelse{\n    day = day[d.getDay()];\n}\n\n\n\ntempmin = listeDay[msg.index].temp.min\ntempmax = listeDay[msg.index].temp.max\nspeedWin = Math.round(listeDay[msg.index].speed / 1000 * 3600)\nhumidity = listeDay[msg.index].humidity\nprevision = listeDay[msg.index].weather[\"0\"].description;\n\ntss = day+\", \"+prevision+\" prévu à \"+City+\", \";\ntss = tss + \"les températures atteindront \"+tempmin+\" degrés pour les minimales et \"+tempmax+\" degrés pour les maximales , \"\ntss = tss + \"L'humidité de l'air sera de \"+humidity+\" % , et la vitesse du vent de \"+speedWin+\" Km/h\"\n\nmsg.speak = tss\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 823,
+        "y": 538,
+        "wires": [
+            [
+                "8250b760.2bfe98"
+            ]
+        ]
+    },
+    {
+        "id": "8250b760.2bfe98",
+        "type": "win-speak",
+        "z": "b66acd7.74f2a3",
+        "name": "",
+        "input": "speak",
+        "x": 989,
+        "y": 539,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "97120a15.929b98",
+        "type": "function",
+        "z": "b66acd7.74f2a3",
+        "name": "domoticz parametres",
+        "func": "msg2.ip = \"192.168.110.150\";\nmsg2.port = \"8081\";\n\n\n\nreturn msg2;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 488,
+        "y": 171,
+        "wires": [
+            [
+                "305b8593.58569a"
+            ]
+        ]
+    },
+    {
+        "id": "65f33c0b.3eaaa4",
+        "type": "win-listen-config",
+        "z": "",
+        "name": "Default",
+        "process": "",
+        "language": "",
+        "confidence": "",
+        "recognizer": "",
+        "hotword": ""
+    },
+    {
+        "id": "b8eaa0b6.3c117",
+        "type": "mqtt-broker",
+        "z": "",
+        "broker": "192.168.110.150",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": ""
+    }
+]
