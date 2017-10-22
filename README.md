@@ -8,6 +8,7 @@ La brique SARAH transmet un objet à la brique suivante qui s’appelle « msg �
 objet en sortie de la brique sarah
 
 msg : Object
+
 object
 payload: object
   text: "sarah éteins Bureau"
