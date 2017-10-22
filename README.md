@@ -3,57 +3,6 @@
 
 Example d'uttilisation sarah V5
 
-La brique SARAH transmet un objet à la brique suivante qui s’appelle « msg » et qui contient les valeurs en  fonction des fichiers xml dans le dossier grammar :
-
-objet en sortie de la brique sarah
-
-msg : Object
-object
-
-payload: object
-
-  text: "sarah éteins Bureau"
-  
-  confidence: 0.8701451
-  
-options: object
-
-  plugin: "domticz-http"
-  
-  action: "Off"
-  
-  command: "switch"
-  
-  device: "21"
-  
-  type: "light"
-  
-
-La partie « options »  provient des élément indiqués dans les fichiers xml .
-
-L’option :
-
--	plugin : 
-
- <tag>out.action.plugin="domticz-http";</tag> 
-
--	action et command :
-
-<item>éteins<tag>out.action.action="Off";</tag><tag>out.action.command="switch";</tag></item>
-
--	device et type:
-
- <item>Bureau <tag>out.action.device="21";</tag><tag>out.action.type="light";</tag></item>
-
-pour récupérer une de ces options dans une fonction ou une autre brique c’est par exemple :
-
-  var action = msg.payload.options.action;
-  var command = msg.payload.options.command;
-  var device = msg.payload.options.device;
-  var type = msg.payload.options.type; 
-
-je ne vais pas tout détailler mais voilà en gros comment ça marche après le code dans les fonctions c’est du js
-Editer le code des brique vous devriez réussir à comprendre avec ces explications sommaires.
 
 Vous pouvez récupérer  les 3 fichiers xml (à placer dans le dossier sarah\viseo-bot-project\data\grammar) et le fichier flow-sarah que vous pouvez importer dans l’interface web de node-red :
 
