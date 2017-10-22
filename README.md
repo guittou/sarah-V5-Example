@@ -3,7 +3,7 @@
 
 Example d'uttilisation sarah V5
 
-La brique SARAH transmet un objet à la brique suivante qui s’appelle « msg » et qui contient les valeurs en  fonction des fichier xml dans le dossier grammar :
+La brique SARAH transmet un objet à la brique suivante qui s’appelle « msg » et qui contient les valeurs en  fonction des fichiers xml dans le dossier grammar :
 
 objet en sortie de la brique sarah
 
